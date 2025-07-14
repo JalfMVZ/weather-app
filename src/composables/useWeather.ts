@@ -5,9 +5,9 @@ export interface WeatherData {
   temp: number
 }
 
-const OPENWEATHER_API_KEY = 'f676c65d63e52381d0af4cdb7f73d71f'
+const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY
+const WEATHERAPI_KEY = import.meta.env.VITE_WEATHERAPI_KEY
 const OPENWEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather'
-const WEATHERAPI_KEY = 'YOUR_WEATHERAPI_KEY'
 const WEATHERAPI_URL = 'https://api.weatherapi.com/v1/current.json'
 
 export default function useWeather() {
@@ -20,7 +20,6 @@ export default function useWeather() {
     error.value = null
     loading.value = true
     try {
-      // OpenWeatherMap
       const res = await fetch(
         `${OPENWEATHER_URL}?q=${encodeURIComponent(city)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=es`,
       )
@@ -32,7 +31,6 @@ export default function useWeather() {
       }
     } catch (e) {
       try {
-        // WeatherAPI fallback
         const res2 = await fetch(
           `${WEATHERAPI_URL}?key=${WEATHERAPI_KEY}&q=${encodeURIComponent(city)}&aqi=no`,
         )
